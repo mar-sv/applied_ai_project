@@ -94,6 +94,29 @@ def get_seeds_columns():
     return ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'seeds']
 
 
+def get_cancer_columns():
+    return ["BI-RADS",
+            "Age",
+            "Shape",
+            "Margin",
+            "Density",
+            "Severity"]
+
+
+def get_yeast_columns():
+
+    return ["Sequence Name",
+            "mcg",
+            "gvh",
+            "alm",
+            "mit",
+            "erl",
+            "pox",
+            "vac",
+            "nuc",
+            'target']
+
+
 def get_covertype_columns():
 
     return [
@@ -271,6 +294,20 @@ def read_data(dataset_name):
         target = "ozone"
         convert_target = True
         drop_columns = ['Date']
+    elif dataset_name == 'mammographic':
+        columns = get_cancer_columns()
+        path = "data/mammographic+mass/mammographic_masses.csv"
+        target = "Severity"
+        dummy_columns = ["Shape", "Margin", "Density", "BI-RADS"]
+        convert_target = False
+        drop_columns = None
+    elif dataset_name == "yeast":
+        columns = get_yeast_columns()
+        path = "data/yeast/yeast.csv"
+        drop_columns = "Sequence Name"
+        target = 'target'
+        convert_target = True
+        dummy_columns = None
 
     data = pd.read_csv(path).dropna()
     data.columns = columns
